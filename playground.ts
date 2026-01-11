@@ -199,6 +199,8 @@ function delayPromise(ms: number): Promise<string> {
 // 예제 2: Async/Await 사용할 때
 // 중요: 내부에서 'await' 키워드를 사용하려면 함수가 반드시 'async'여야 합니다.
 // 또한 async 함수는 항상 Promise를 반환합니다. (return이 없으면 Promise<void>)
+// 참고: 여기서 Promise<void>의 < >는 제네릭입니다. Promise는 내부적으로 class Promise<T> 처럼 정의된 제네릭 타입입니다.
+// T는 비동기 작업이 성공(resolve)했을 때 반환되는 값의 타입입니다.
 async function runAsyncTest(): Promise<void> {
     try {
         console.log("시작");

@@ -220,3 +220,40 @@ async function asyncWithoutAwait() {
     return 1;
 }
 // const ret = asyncWithoutAwait(); // ret는 Promise<number> 타입입니다.
+
+/**
+ * Generator (제너레이터)
+ * 함수의 실행을 중간에 멈췄다가(suspend) 다시 재개(resume)할 수 있는 특별한 함수입니다.
+ * - function* 문법을 사용하여 정의합니다.
+ * - yield 키워드를 사용하여 값을 반환하고 실행을 멈춥니다.
+ * - next() 메서드를 호출하여 제너레이터를 다시 시작합니다.
+ * - 반환값은 { value: T, done: boolean } 형태의 객체입니다.
+ */
+function* simpleGenerator() {
+    console.log("제너레이터 시작");
+    yield 1;
+    console.log("제너레이터 재개 1");
+    yield 2;
+    console.log("제너레이터 재개 2");
+    yield 3;
+    console.log("제너레이터 종료");
+}
+
+const gen = simpleGenerator();
+// next()를 호출할 때마다 yield를 만날 때까지 실행되고 멈춥니다.
+console.log(gen.next()); // { value: 1, done: false }
+console.log(gen.next()); // { value: 2, done: false }
+console.log(gen.next()); // { value: 3, done: false }
+console.log(gen.next()); // { value: undefined, done: true } (더 이상 yield할 값이 없음)
+
+// 활용 예제: ID 생성기 (무한 루프도 제너레이터에서는 문제없이 사용 가능합니다)
+function* idGenerator() {
+    let id = 1;
+    while (true) {
+        yield id++;
+    }
+}
+const idGen = idGenerator();
+console.log(idGen.next().value); // 1
+console.log(idGen.next().value); // 2
+console.log(idGen.next().value); // 3
